@@ -12,8 +12,9 @@
 <body>
 <div class="container mt-3">
     <h3>ELF 短网址</h3>
-    <p>输入你要缩短的网址</p>
-    <p><a href="/docs">API Docs</a></p>
+    <a href="/docs">API Docs</a><br>
+    Blog: <a href="https://myelf.club">MYELF</a>
+    <p>输入你要缩短的网址:</p>
     <div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -30,18 +31,26 @@
 
 </body>
 <script>
-    $(document).ready(function(){
-        $("#button").click(function(){
+    $(document).ready(function () {
+        $("#button").click(function () {
             url = $("#url").val().trim()
-            if(url.length<=0){
+            if (url.length <= 0) {
                 alert("链接不能为空！");
                 return
             }
-            $.get("api/insert?url="+encodeURIComponent(url),function(data,status){
-                if(data.code==200){
-                    document.getElementById("out").innerHTML="<p>短链接：<a href='"+data.data.url+"'>"+data.data.url+"</a></p>"
-                }else{
-                    alert(data.message);
+            $.ajax({
+                type: 'get',
+                url: "api/insert?url=" + encodeURIComponent(url),
+                dataType: "json",
+                success: function (result) {
+                    if (result.code == 200) {
+                        document.getElementById("out").innerHTML = "<p>短链接：<a href='" + result.data.url + "'>" + result.data.url + "</a></p>"
+                    } else {
+                        alert(result.message);
+                    }
+                },
+                error: function (e) {
+                    alert(JSON.parse(e.responseText).message);
                 }
             });
         });

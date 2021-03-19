@@ -1,8 +1,8 @@
-
-
 # BASE62 = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-BASE62 = "abclmnopq01236789rstuvw45xyzKLdefghijkMNOSTUVPQRWXYZABCDEFGHIJ" # 乱序，防止猜到
-def encode(num, alphabet:str=BASE62):
+BASE62 = "abclmnopq01236789rstuvw45xyzKLdefghijkMNOSTUVPQRWXYZABCDEFGHIJ"  # 乱序，防止猜到
+
+
+def encode(num, alphabet: str = BASE62):
     """Encode a positive number into Base X and return the string.
 
     Arguments:
@@ -20,6 +20,7 @@ def encode(num, alphabet:str=BASE62):
         arr_append(alphabet[rem])
     arr.reverse()
     return ''.join(arr)
+
 
 def decode(string, alphabet=BASE62):
     """Decode a Base X encoded string into the number
