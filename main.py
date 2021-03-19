@@ -6,7 +6,7 @@ from starlette.templating import Jinja2Templates
 
 import config
 from util import response_code
-from util.url_redis import inster_url, select_url
+from util.url_redis import inster_url, select_url, get_flag
 import uvicorn
 from fastapi import FastAPI
 from starlette.responses import RedirectResponse
@@ -20,9 +20,10 @@ tmp = Jinja2Templates(directory='templates')
 
 @app.get("/")
 async def read_item(request: Request):
+    flag = int(await get_flag())
     return tmp.TemplateResponse('index.html', {
         'request': request,  # 一定要返回request
-        'args': 'hello world'  # 额外的参数可有可无
+        'url_num': flag-config.flag  # 当前短链数量
     })
 
 

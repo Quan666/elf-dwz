@@ -38,6 +38,9 @@ async def select_url(short_code: str) -> str:
     else:
         return None
 
+async def get_flag()->int:
+    r = redis.Redis(connection_pool=pool)
+    return r.get(name='elfflag')
 
 if __name__ == "__main__":
     print(inster_url('asssd'))
