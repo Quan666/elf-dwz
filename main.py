@@ -1,16 +1,17 @@
 import re
 from urllib.parse import unquote, quote
 
+
 from starlette.requests import Request
 from starlette.templating import Jinja2Templates
 
 import config
 from util import response_code
+from util.Redirect import Redirect
 from util.check_url_safely import check_url_safely
 from util.url_redis import inster_url, select_url, get_flag
 import uvicorn
 from fastapi import FastAPI
-from starlette.responses import RedirectResponse
 
 
 from util.url_redis import inster_url
@@ -35,7 +36,8 @@ async def read_root(short_code: str):
         url = unquote(url, 'utf-8')
     else:
         url = config.server_address
-    return RedirectResponse(url=url)
+    return Redirect(url=url)
+
 
 
 @app.get("/api/insert")
