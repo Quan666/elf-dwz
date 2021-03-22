@@ -10,3 +10,7 @@ server_address='http://127.0.0.1:8080'
 
 # 数据库开始 flag值
 flag = 10000
+
+
+# 检查安全链接 api
+check_url_safely_api=''

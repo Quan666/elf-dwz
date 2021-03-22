@@ -6,12 +6,13 @@ from starlette.templating import Jinja2Templates
 
 import config
 from util import response_code
+from util.check_url_safely import check_url_safely
 from util.url_redis import inster_url, select_url, get_flag
 import uvicorn
 from fastapi import FastAPI
 from starlette.responses import RedirectResponse
 
-from util.Base62 import encode, decode
+
 from util.url_redis import inster_url
 
 app = FastAPI()
@@ -40,6 +41,8 @@ async def read_root(short_code: str):
 @app.get("/api/insert")
 async def read_item(url: str=config.server_address):
     url = unquote(url, 'utf-8')
+    if not await check_url_safely(url=url):
+        return response_code.resp_400(data=None, message='该网站存在风险！')
     if len(url) <= 3:
         return response_code.resp_400(data=None, message='请输入正确的网址！')
     else:
